@@ -4,19 +4,23 @@ import com.willclay.pngconverter.converter.ImageFileFilter;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
 import java.nio.file.Path;
 
 public class Window extends JFrame
 {
     private Path selectedImagePath;
 
+    private final ImagePanel imagePanel;
+    private final JPanel buttonPanel;
+
     public Window()
     {
         super("Image PNG Converter");
         setLayout(new BorderLayout());
 
-        JPanel imagePanel = new ImagePanel();
-        JPanel buttonPanel = new ButtonPanel();
+        imagePanel = new ImagePanel(this);
+        buttonPanel = new ButtonPanel();
 
         JButton selectImageButton = new JButton("Select Image to Convert");
         selectImageButton.addActionListener(e -> selectImage());
@@ -24,7 +28,9 @@ public class Window extends JFrame
         JButton convertButton = new JButton("Convert to PNG");
         convertButton.addActionListener(e -> convert());
 
-        add(selectImageButton, BorderLayout.NORTH);
+        add(imagePanel, BorderLayout.NORTH);
+
+        add(selectImageButton, BorderLayout.CENTER);
         add(convertButton, BorderLayout.SOUTH);
     }
 
@@ -37,6 +43,15 @@ public class Window extends JFrame
         if (result == JFileChooser.APPROVE_OPTION)
         {
             selectedImagePath = imageChooser.getSelectedFile().toPath();
+
+            try
+            {
+                imagePanel.showImage(selectedImagePath);
+            }
+            catch (IOException _)
+            {
+
+            }
         }
     }
 

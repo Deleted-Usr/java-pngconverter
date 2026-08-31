@@ -1,10 +1,11 @@
 package com.willclay.pngconverter;
 
+import com.formdev.flatlaf.FlatDarkLaf;
 import com.willclay.pngconverter.ui.Window;
 
 import javax.swing.*;
 
-// TODO - Display the chosed image
+// TODO - Display the chosen image
 
 public class Main
 {
@@ -28,7 +29,7 @@ public class Main
     {
         try
         {
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+            UIManager.setLookAndFeel(new FlatDarkLaf());
         }
         catch (Exception _)
         {
