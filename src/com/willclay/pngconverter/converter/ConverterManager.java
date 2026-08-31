@@ -1,9 +1,8 @@
 package com.willclay.pngconverter.converter;
 
-import com.willclay.pngconverter.ui.Window;
-
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.nio.file.Path;
 
@@ -12,11 +11,11 @@ public class ConverterManager extends SwingWorker<Void, Void>
     private Path inputPath;
     private Path outputPath;
 
-    private final Window window;
+    private final Component dialogParent;
 
-    public ConverterManager(Window window)
+    public ConverterManager(Component dialogParent)
     {
-        this.window = window;
+        this.dialogParent = dialogParent;
     }
 
     public void setPaths(Path inputPath, Path outputPath)
@@ -35,15 +34,9 @@ public class ConverterManager extends SwingWorker<Void, Void>
             throw new IllegalArgumentException("Unsupported or invalid image: " + inputPath);
         }
 
-        boolean success = ImageIO.write(image, "png", outputPath.toFile());
-
-        if (success)
+        if (!ImageIO.write(image, "png", outputPath.toFile()))
         {
-            JOptionPane.showMessageDialog(null, "Image converted to PNG successfully.");
-        }
-        else
-        {
-            JOptionPane.showMessageDialog(null, "Failed to convert image to PNG.");
+            throw new IllegalStateException("No PNG writer is available.");
         }
 
         return null;
@@ -56,7 +49,7 @@ public class ConverterManager extends SwingWorker<Void, Void>
         {
             get();
             JOptionPane.showMessageDialog(
-                    window,
+                    dialogParent,
                     "Image converted to PNG successfully.",
                     "Conversion Complete!",
                     JOptionPane.INFORMATION_MESSAGE
@@ -64,10 +57,11 @@ public class ConverterManager extends SwingWorker<Void, Void>
         }
         catch (Exception e)
         {
+            Throwable cause = e.getCause() == null ? e : e.getCause();
             JOptionPane.showMessageDialog(
-                    window,
+                    dialogParent,
                     "Failed to convert image to PNG:\n"
-                                + e.getCause().getMessage(),
+                                + cause.getMessage(),
                     "Conversion Failed",
                     JOptionPane.ERROR_MESSAGE
             );

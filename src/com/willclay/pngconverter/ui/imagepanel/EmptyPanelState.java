@@ -5,7 +5,9 @@ import java.awt.*;
 
 public class EmptyPanelState extends JPanel
 {
-    public EmptyPanelState(Runnable selectImageAction)
+    private final JButton selectImage;
+
+    public EmptyPanelState()
     {
         super(new GridBagLayout());
 
@@ -21,8 +23,7 @@ public class EmptyPanelState extends JPanel
         description.setForeground(secondaryTextColor());
         description.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        JButton selectImage = new JButton("Select an Image");
-        selectImage.addActionListener(e -> selectImageAction.run());
+        selectImage = new JButton("Open Image…");
         selectImage.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         overview.add(title);
@@ -34,6 +35,11 @@ public class EmptyPanelState extends JPanel
         overview.add(selectImage);
 
         add(overview);
+    }
+
+    public void setOpenImageAction(Action openImageAction)
+    {
+        selectImage.setAction(openImageAction);
     }
 
     private static JPanel createStepsPanel()
