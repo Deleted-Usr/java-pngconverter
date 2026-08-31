@@ -5,8 +5,6 @@ import com.willclay.pngconverter.ui.Window;
 
 import javax.swing.*;
 
-// TODO - Display the chosen image
-
 public class Main
 {
     public static void main(String[] args)

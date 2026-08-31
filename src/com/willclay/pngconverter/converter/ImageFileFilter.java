@@ -1,28 +1,19 @@
 package com.willclay.pngconverter.converter;
 
+import com.formdev.flatlaf.util.SystemFileChooser;
+
 import javax.swing.filechooser.FileFilter;
 import java.io.File;
 
-public class ImageFileFilter extends FileFilter
+public class ImageFileFilter
 {
-    @Override
-    public boolean accept(File f)
-    {
-        if (f.isDirectory())
-        {
-            return true;
-        }
+    private ImageFileFilter() {}
 
-        String name = f.getName().toLowerCase();
-        return (name.endsWith(".jpg") ||
-                name.endsWith(".jpeg") ||
-                name.endsWith(".gif") ||
-                name.endsWith(".bmp")) && !name.endsWith(".png");
-    }
-
-    @Override
-    public String getDescription()
+    public static SystemFileChooser.FileFilter create()
     {
-        return "Images (*.jpg, *.jpeg, *.gif, *.bmp)";
+        return new SystemFileChooser.FileNameExtensionFilter(
+                "Images (*.jpg, *.jpeg, *.gif, *.bmp, *.webp)",
+                "jpg", "jpeg", "gif", "bmp", "webp"
+        );
     }
 }

@@ -1,5 +1,7 @@
 package com.willclay.pngconverter.ui;
 
+import com.formdev.flatlaf.util.SystemFileChooser;
+import com.willclay.pngconverter.converter.ConverterManager;
 import com.willclay.pngconverter.converter.ImageFileFilter;
 
 import javax.swing.*;
@@ -11,16 +13,20 @@ public class Window extends JFrame
 {
     private Path selectedImagePath;
 
+    private final ConverterManager converterManager;
+
     private final ImagePanel imagePanel;
-    private final JPanel buttonPanel;
+    private final OptionsPanel optionsPanel;
 
     public Window()
     {
         super("Image PNG Converter");
         setLayout(new BorderLayout());
 
+        converterManager = new ConverterManager();
+
         imagePanel = new ImagePanel(this);
-        buttonPanel = new ButtonPanel();
+        optionsPanel = new OptionsPanel(this::selectImage, converterManager::convert, selectedImagePath);
 
         JButton selectImageButton = new JButton("Select Image to Convert");
         selectImageButton.addActionListener(e -> selectImage());
@@ -29,20 +35,21 @@ public class Window extends JFrame
         convertButton.addActionListener(e -> convert());
 
         add(imagePanel, BorderLayout.NORTH);
+        add(optionsPanel, BorderLayout.SOUTH);
 
-        add(selectImageButton, BorderLayout.CENTER);
-        add(convertButton, BorderLayout.SOUTH);
+        //add(selectImageButton, BorderLayout.CENTER);
+        //add(convertButton, BorderLayout.SOUTH);
     }
 
     private void selectImage()
     {
-        JFileChooser imageChooser = new JFileChooser();
-        imageChooser.setFileFilter(new ImageFileFilter());
+        SystemFileChooser fileChooser = new SystemFileChooser();
+        fileChooser.addChoosableFileFilter(ImageFileFilter.create());
 
-        int result = imageChooser.showOpenDialog(this);
+        int result = fileChooser.showOpenDialog(this);
         if (result == JFileChooser.APPROVE_OPTION)
         {
-            selectedImagePath = imageChooser.getSelectedFile().toPath();
+            selectedImagePath = fileChooser.getSelectedFile().toPath();
 
             try
             {

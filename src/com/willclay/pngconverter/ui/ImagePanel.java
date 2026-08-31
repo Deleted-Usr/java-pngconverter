@@ -8,24 +8,36 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 
+// TODO - Use a CardLayout to show the panel even when no image is shown.
+
 public class ImagePanel extends JPanel
 {
-    private JLabel label = new JLabel();
+    private JLabel label = new JLabel("No Image Selected", SwingConstants.CENTER);
+
+    private BufferedImage image;
 
     public ImagePanel(Window window)
     {
         super(new BorderLayout());
+        setMaximumSize(new Dimension());
 
         add(label, BorderLayout.CENTER);
     }
 
     public void showImage(Path path) throws IOException
     {
-        String pathString = path.toString();
+        BufferedImage image = ImageIO.read(path.toFile());
 
-        BufferedImage image = ImageIO.read(new File(pathString));
+        if (image == null)
+        {
+            throw new IOException("Unsupported or invalid image" + path);
+        }
+
         label.setIcon(new ImageIcon(image));
+
 
         repaint();
     }
+
+
 }
