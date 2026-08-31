@@ -36,9 +36,6 @@ public class Window extends JFrame
 
         add(imagePanel, BorderLayout.NORTH);
         add(optionsPanel, BorderLayout.SOUTH);
-
-        //add(selectImageButton, BorderLayout.CENTER);
-        //add(convertButton, BorderLayout.SOUTH);
     }
 
     private void selectImage()
