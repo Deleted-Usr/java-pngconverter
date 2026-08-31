@@ -4,6 +4,7 @@ import com.willclay.pngconverter.actions.ConverterAction;
 
 import java.nio.file.Path;
 
+/// Reopens one persisted recent-image path through the standard open-image workflow.
 public final class OpenRecentAction extends ConverterAction
 {
     private final Path path;
@@ -22,6 +23,7 @@ public final class OpenRecentAction extends ConverterAction
         openImageAction.open(path);
     }
 
+    /// Uses the file name as the menu label while retaining the full path as its tooltip.
     private static String displayName(Path path)
     {
         Path fileName = path.getFileName();

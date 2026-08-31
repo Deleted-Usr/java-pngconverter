@@ -7,8 +7,15 @@ import com.willclay.pngconverter.ui.Window;
 import javax.imageio.spi.IIORegistry;
 import javax.swing.*;
 
+/// Starts PNG Converter and creates its Swing user interface.
+///
+/// Image readers and the look and feel are configured before the main [Window]
+/// is shown on Swing's event-dispatch thread.
 public class Main
 {
+    /// Launches the desktop application.
+    ///
+    /// @param args command-line arguments; currently unused
     public static void main(String[] args)
     {
         registerImageReaders();
@@ -27,6 +34,7 @@ public class Main
         });
     }
 
+    /// Registers the WebP reader when ImageIO has not discovered it automatically.
     private static void registerImageReaders()
     {
         IIORegistry registry = IIORegistry.getDefaultInstance();
@@ -37,6 +45,7 @@ public class Main
         }
     }
 
+    /// Applies the default dark theme, leaving Swing's current theme in place on failure.
     private static void setLookAndFeel()
     {
         try

@@ -5,6 +5,7 @@ import com.willclay.pngconverter.model.ImageSession;
 
 import javax.swing.*;
 
+/// Adapts a preview operation, such as zooming, into an image-dependent Swing action.
 public final class ImageViewAction extends ImageDependentAction
 {
     private final Runnable operation;

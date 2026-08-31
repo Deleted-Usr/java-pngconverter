@@ -13,6 +13,10 @@ import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.nio.file.Path;
 
+/// Lets the user select an image and loads it into the preview and current session.
+///
+/// Recent-image entries call [#open(Path)] directly so chosen and recent files follow
+/// the same validation, state-update, and history-update path.
 public final class OpenImageAction extends ConverterAction
 {
     private final Component parent;
@@ -46,6 +50,9 @@ public final class OpenImageAction extends ConverterAction
         }
     }
 
+    /// Opens a known path and records it after the preview has decoded it successfully.
+    ///
+    /// @param imagePath image file to open
     public void open(Path imagePath)
     {
         try

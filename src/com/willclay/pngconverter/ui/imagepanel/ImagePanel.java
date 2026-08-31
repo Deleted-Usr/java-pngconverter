@@ -9,6 +9,10 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.nio.file.Path;
 
+/// Switches the central preview area between its empty and loaded-image states.
+///
+/// Image loading is kept here so callers only need to supply a [Path]; zoom and
+/// background operations are delegated to [HasImageState].
 public class ImagePanel extends JPanel
 {
     private static final String EMPTY_STATE = "empty";
@@ -38,6 +42,10 @@ public class ImagePanel extends JPanel
         emptyPanelState.setOpenImageAction(openImageAction);
     }
 
+    /// Loads and displays an image, or reports an unsupported or invalid file.
+    ///
+    /// @param path image file to read
+    /// @throws IOException if ImageIO cannot decode the file
     public void showImage(Path path) throws IOException
     {
         BufferedImage image = ImageIO.read(path.toFile());

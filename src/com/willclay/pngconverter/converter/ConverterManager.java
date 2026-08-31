@@ -6,6 +6,17 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.nio.file.Path;
 
+/// Converts one image to PNG away from Swing's event-dispatch thread.
+///
+/// Configure the paths before starting the worker:
+///
+/// ```java
+/// ConverterManager converter = new ConverterManager(parentComponent);
+/// converter.setPaths(inputPath, outputPath);
+/// converter.execute();
+/// ```
+///
+/// Completion and failure messages are displayed on the event-dispatch thread by [#done()].
 public class ConverterManager extends SwingWorker<Void, Void>
 {
     private Path inputPath;
@@ -18,12 +29,17 @@ public class ConverterManager extends SwingWorker<Void, Void>
         this.dialogParent = dialogParent;
     }
 
+    /// Sets the source image and destination PNG used by the next execution.
+    ///
+    /// @param inputPath image to decode
+    /// @param outputPath PNG file to write
     public void setPaths(Path inputPath, Path outputPath)
     {
         this.inputPath = inputPath;
         this.outputPath = outputPath;
     }
 
+    /// Reads and encodes the image on this worker's background thread.
     @Override
     protected Void doInBackground() throws Exception
     {
@@ -42,6 +58,7 @@ public class ConverterManager extends SwingWorker<Void, Void>
         return null;
     }
 
+    /// Reports the worker's result after Swing returns execution to the event-dispatch thread.
     @Override
     protected void done()
     {

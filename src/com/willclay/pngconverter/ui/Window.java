@@ -8,6 +8,10 @@ import com.willclay.pngconverter.ui.menus.MenuBar;
 import javax.swing.*;
 import java.awt.*;
 
+/// The application's main window and top-level UI coordinator.
+///
+/// It owns the shared [ImageSession], actions, preview, and conversion controls,
+/// and updates its title and controls whenever the selected image changes.
 public class Window extends JFrame
 {
     private static final String APPLICATION_TITLE = "PNG Converter";

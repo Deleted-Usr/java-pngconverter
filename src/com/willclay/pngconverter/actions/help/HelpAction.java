@@ -5,6 +5,7 @@ import com.willclay.pngconverter.actions.ConverterAction;
 import javax.swing.*;
 import java.awt.*;
 
+/// Shows a named informational message in a modal dialog.
 public final class HelpAction extends ConverterAction
 {
     private final Component parent;

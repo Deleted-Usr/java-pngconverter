@@ -5,6 +5,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.prefs.Preferences;
 
+/// Maintains a most-recently-used list of image paths across application launches.
+///
+/// Paths are normalized, deduplicated, and capped at ten entries before being saved
+/// with [Preferences]. Malformed stored paths are ignored during startup.
 public final class RecentImages
 {
     private static final int MAX_RECENT_IMAGES = 10;
@@ -18,11 +22,13 @@ public final class RecentImages
         load();
     }
 
+    /// Returns a read-only snapshot ordered from newest to oldest.
     public List<Path> getPaths()
     {
         return List.copyOf(paths);
     }
 
+    /// Moves a path to the front of the history and persists the updated list.
     public void add(Path path)
     {
         Path normalizedPath = path.toAbsolutePath().normalize();
@@ -37,6 +43,7 @@ public final class RecentImages
         save();
     }
 
+    /// Restores consecutive preference entries until the first unused slot.
     private void load()
     {
         for (int index = 0; index < MAX_RECENT_IMAGES; index++)
@@ -55,6 +62,7 @@ public final class RecentImages
         }
     }
 
+    /// Writes current paths and removes stale entries left by a previously longer list.
     private void save()
     {
         for (int index = 0; index < MAX_RECENT_IMAGES; index++)

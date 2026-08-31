@@ -3,6 +3,9 @@ package com.willclay.pngconverter.ui.imagepanel;
 import javax.swing.*;
 import java.awt.*;
 
+/// The preview state shown before an image is selected.
+///
+/// It presents brief usage instructions and a button wired to the shared open-image action.
 public class EmptyPanelState extends JPanel
 {
     private final JButton selectImage;
@@ -63,6 +66,7 @@ public class EmptyPanelState extends JPanel
         return step;
     }
 
+    /// Uses the current theme's subdued label color, with a normal text-color fallback.
     private static Color secondaryTextColor()
     {
         Color color = UIManager.getColor("Label.disabledForeground");

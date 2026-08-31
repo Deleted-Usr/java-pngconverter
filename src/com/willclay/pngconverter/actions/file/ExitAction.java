@@ -7,6 +7,7 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowEvent;
 
+/// Requests application shutdown through the window's normal closing event.
 public final class ExitAction extends ConverterAction
 {
     private final Window window;

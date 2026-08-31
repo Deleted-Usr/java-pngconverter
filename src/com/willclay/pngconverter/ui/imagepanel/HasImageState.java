@@ -6,6 +6,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
+/// Renders the selected image with zooming and configurable preview backgrounds.
+///
+/// The image is centered at either an explicit scale or the largest scale that fits
+/// the whole image inside the panel.
 public class HasImageState extends JPanel
 {
     private static final double ZOOM_STEP = 1.25;
@@ -103,6 +107,7 @@ public class HasImageState extends JPanel
         }
     }
 
+    /// Calculates the effective scale without overwriting the user's explicit zoom level.
     private double currentScale()
     {
         if (!fitToWindow || image == null || getWidth() <= 0 || getHeight() <= 0)
@@ -131,6 +136,7 @@ public class HasImageState extends JPanel
         }
     }
 
+    /// Paints a theme-aware checkerboard that makes image transparency visible.
     private void paintCheckerboard(Graphics2D graphics)
     {
         boolean darkTheme = UIManager.getBoolean("laf.dark");

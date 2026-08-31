@@ -21,6 +21,10 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
 
+/// Creates and owns the application's shared Swing actions.
+///
+/// Supplying the same action instances to menus and buttons keeps their labels,
+/// shortcuts, enabled states, and selected states synchronized automatically.
 public final class ActionManager
 {
     private final RecentImages recentImages = new RecentImages();
@@ -116,6 +120,7 @@ public final class ActionManager
     public Action getSupportedFormatsAction() { return supportedFormatsAction; }
     public Action getAboutAction() { return aboutAction; }
 
+    /// Creates a read-only snapshot of actions for the current recent-image history.
     public List<OpenRecentAction> getOpenRecentActions()
     {
         List<OpenRecentAction> actions = new ArrayList<>();

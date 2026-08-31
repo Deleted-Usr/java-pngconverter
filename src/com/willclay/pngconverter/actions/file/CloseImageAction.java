@@ -7,6 +7,7 @@ import com.willclay.pngconverter.ui.imagepanel.ImagePanel;
 
 import java.awt.event.KeyEvent;
 
+/// Clears the current preview and closes the corresponding image session.
 public final class CloseImageAction extends ImageDependentAction
 {
     private final ImagePanel imagePanel;

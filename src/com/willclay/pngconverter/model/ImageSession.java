@@ -1,21 +1,17 @@
 package com.willclay.pngconverter.model;
 
-import com.willclay.pngconverter.ui.imagepanel.ImagePanel;
 import com.willclay.pngconverter.ui.Window;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.nio.file.Path;
 
-/// The currently open image and how the {@link ImagePanel} handles it.
+/// Stores the currently open image and its chosen PNG output path.
 ///
-/// This classes uses PropertyChangeListeners across the project that listen
-/// for changes on either of the two static String properites of the class.
-/// classes can register change listeners that call methods when a `firePropertyChange`
-/// is called.
+/// Other parts of the application can listen for either property instead of directly
+/// coupling themselves to the code that opens, closes, or exports an image.
 ///
-/// For example: in {@link Window}, a `PropertyChangeListener` is registered with the
-/// [SELECTED_IMAGE_PROPERTY]
+/// For example, [Window] updates its controls whenever the selected image changes:
 ///
 /// ```java
 /// imageSession.addPropertyChangeListener(
@@ -23,12 +19,11 @@ import java.nio.file.Path;
 ///         event -> updateImageState()
 /// );
 /// ```
-///
-/// The method `updateImageState()` will be called when `firePropertyChange` is called in
-/// this class.
 public final class ImageSession
 {
+    /// Property name fired when the selected input-image path changes.
     public static final String SELECTED_IMAGE_PROPERTY = "selectedImage";
+    /// Property name fired when the chosen output path changes.
     public static final String OUTPUT_PATH_PROPERTY = "outputPath";
 
     private final PropertyChangeSupport changes = new PropertyChangeSupport(this);
@@ -45,11 +40,15 @@ public final class ImageSession
         return outputPath;
     }
 
+    /// Reports whether an input image is currently open.
     public boolean hasImage()
     {
         return selectedImagePath != null;
     }
 
+    /// Opens a normalized absolute path and clears any output chosen for the previous image.
+    ///
+    /// @param path selected input-image path
     public void openImage(Path path)
     {
         Path normalizedPath = path.toAbsolutePath().normalize();
@@ -60,6 +59,7 @@ public final class ImageSession
         changes.firePropertyChange(SELECTED_IMAGE_PROPERTY, oldImagePath, selectedImagePath);
     }
 
+    /// Clears both the selected input image and its output path.
     public void closeImage()
     {
         Path oldImagePath = selectedImagePath;
@@ -69,6 +69,7 @@ public final class ImageSession
         changes.firePropertyChange(SELECTED_IMAGE_PROPERTY, oldImagePath, null);
     }
 
+    /// Stores a normalized absolute output path, or clears it when passed `null`.
     public void setOutputPath(Path path)
     {
         Path oldOutputPath = outputPath;
@@ -76,6 +77,10 @@ public final class ImageSession
         changes.firePropertyChange(OUTPUT_PATH_PROPERTY, oldOutputPath, outputPath);
     }
 
+    /// Registers a listener for one named session property.
+    ///
+    /// @param propertyName one of [#SELECTED_IMAGE_PROPERTY] or [#OUTPUT_PATH_PROPERTY]
+    /// @param listener callback notified after that property changes
     public void addPropertyChangeListener(String propertyName, PropertyChangeListener listener)
     {
         changes.addPropertyChangeListener(propertyName, listener);

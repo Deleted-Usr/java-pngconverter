@@ -3,6 +3,9 @@ package com.willclay.pngconverter.ui;
 import javax.swing.*;
 import java.awt.*;
 
+/// Displays the actions available after an image has been opened.
+///
+/// The main [Window] hides this panel while no image is selected.
 public class OptionsPanel extends JPanel
 {
     private final JButton selectImage;

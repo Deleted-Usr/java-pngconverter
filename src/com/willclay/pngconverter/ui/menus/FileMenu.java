@@ -9,6 +9,10 @@ import javax.swing.event.MenuListener;
 import java.awt.event.KeyEvent;
 import java.util.List;
 
+/// Provides image-opening, exporting, closing, and application-exit actions.
+///
+/// The recent-images submenu is rebuilt each time it opens so it reflects the
+/// latest persisted history.
 public final class FileMenu extends JMenu
 {
     private final ActionManager actionManager;
@@ -46,6 +50,7 @@ public final class FileMenu extends JMenu
         rebuildRecentImages();
     }
 
+    /// Replaces the recent-images submenu with actions for the current history.
     private void rebuildRecentImages()
     {
         openRecentMenu.removeAll();

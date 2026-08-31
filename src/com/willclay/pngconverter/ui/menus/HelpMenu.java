@@ -5,6 +5,7 @@ import com.willclay.pngconverter.actions.ActionManager;
 import javax.swing.*;
 import java.awt.event.KeyEvent;
 
+/// Provides informational dialogs for supported formats and application details.
 public final class HelpMenu extends JMenu
 {
     public HelpMenu(ActionManager actionManager)

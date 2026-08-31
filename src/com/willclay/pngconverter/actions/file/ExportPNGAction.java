@@ -12,6 +12,10 @@ import java.io.File;
 import java.nio.file.Path;
 import java.util.Locale;
 
+/// Prompts for a destination and converts the current image to PNG in the background.
+///
+/// The chooser proposes the input file's directory and base name, while
+/// [#ensurePngExtension(Path)] guarantees a `.png` suffix on the selected path.
 public final class ExportPNGAction extends ImageDependentAction
 {
     private final Component parent;
@@ -53,6 +57,7 @@ public final class ExportPNGAction extends ImageDependentAction
         }
     }
 
+    /// Derives a sibling PNG file name without duplicating the input extension.
     private static File suggestedOutputFile(Path selectedImagePath)
     {
         String inputName = selectedImagePath.getFileName().toString();
@@ -64,6 +69,7 @@ public final class ExportPNGAction extends ImageDependentAction
         return (parent == null ? suggestion : parent.resolve(suggestion)).toFile();
     }
 
+    /// Appends `.png` unless the final path component already has that suffix.
     private static Path ensurePngExtension(Path path)
     {
         String fileName = path.getFileName().toString();

@@ -7,6 +7,7 @@ import com.willclay.pngconverter.actions.ConverterAction;
 import javax.swing.*;
 import java.awt.*;
 
+/// Applies a selected [ThemeMode] and refreshes the complete application window.
 public final class SetThemeAction extends ConverterAction
 {
     private final ThemeMode theme;

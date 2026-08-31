@@ -4,6 +4,10 @@ import com.willclay.pngconverter.actions.ImageDependentAction;
 import com.willclay.pngconverter.model.ImageSession;
 import com.willclay.pngconverter.ui.imagepanel.ImagePanel;
 
+/// Changes the background behind the image preview.
+///
+/// The action is disabled when no image is open and exposes Swing's selected state
+/// so it can be used directly by a radio-button menu item.
 public final class SetPreviewBackgroundAction extends ImageDependentAction
 {
     private final PreviewBackground background;

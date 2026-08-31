@@ -4,6 +4,10 @@ import com.willclay.pngconverter.model.ImageSession;
 
 import javax.swing.*;
 
+/// Base action that is enabled only while an image is open.
+///
+/// The enabled state follows [ImageSession#SELECTED_IMAGE_PROPERTY], keeping menu
+/// items and buttons synchronized without each action duplicating listener logic.
 public abstract class ImageDependentAction extends ConverterAction
 {
     protected ImageDependentAction(

@@ -5,6 +5,7 @@ import com.willclay.pngconverter.actions.ActionManager;
 import javax.swing.*;
 import java.awt.event.KeyEvent;
 
+/// Builds the View menu for zoom, preview-background, and application-theme actions.
 public final class ViewMenu extends JMenu
 {
     public ViewMenu(ActionManager actionManager)
@@ -22,6 +23,7 @@ public final class ViewMenu extends JMenu
         add(createRadioMenu("Theme", actionManager.getThemeActions()));
     }
 
+    /// Groups related toggle actions so Swing keeps exactly one item selected.
     private static JMenu createRadioMenu(String name, Iterable<? extends Action> actions)
     {
         JMenu menu = new JMenu(name);
